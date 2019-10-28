@@ -17,14 +17,27 @@ let
       };
     };
 
+  pytube = python.pkgs.buildPythonPackage {
+    name = "pytube-9.4.0";
+    src = pkgs.fetchurl { url = "https://files.pythonhosted.org/packages/db/59/f8b9e64a7ab420c3a91722f8d34a452013f59100fed4d8e930afa1da01f8/pytube-9.4.0.tar.gz";
+	sha256 = "686fe7ff6f2cb08828f1015f244c69e3a2ea85c8b6d727abe63ec5bfd17e58d2"; };
+    doCheck = false;
+    propagatedBuildInputs = [ ];
+    meta = with pkgs.stdenv.lib; {
+      homepage = "https://github.com/nficano/pytube";
+      license = licenses.mit;
+      description = "A pythonic library for downloading YouTube Videos.";
+    };
+    };
   pythonForThis = python.withPackages (ps: with ps;[
     scipy
     numpy
     pillow
     audiotsm
+	pytube
   ]);
   jumpcutter = stdenv.mkDerivation {
-    pname = "jumpcutter";
+    name = "jumpcutter";
     version = "0.0.1";
     src = ./.;
     buildInputs = [
